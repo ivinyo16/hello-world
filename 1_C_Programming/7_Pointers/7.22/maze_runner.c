@@ -5,9 +5,9 @@
 
 #define SIZE 12
 #define RIGHT 1
-#define UP 2
+#define DOWN 2
 #define LEFT 3
-#define DOWN 4
+#define UP 4
 
 int direction = 0;
 
@@ -25,12 +25,15 @@ void printMaze(int maze[][12])
 	}
 }
 
-int mazeTraverse(int maze[][SIZE], int x, int y)
+
+int *mazeTraverse(int maze[][SIZE], int  *ptr)
 {
-	int currX = x;
-	int currY = y;
+	//int currX = x;
+	//int currY = y;
+	int moved = 0;
 	int new = 0;
-	int *ptr = &maze[x][y];
+	//int *ptr = &maze[x][y];
+	//int *ptr = current;
 	int *hand;
 	// set direction if not set
 	if (!direction)
@@ -63,58 +66,68 @@ int mazeTraverse(int maze[][SIZE], int x, int y)
 	}
 	
 	//will exit once a move has been established
-	while(currX == x && currY == y)
+	//while(currX == x && currY == y)
+	while(!moved)
 	{
 		if(direction > 4)
 			direction = RIGHT;
 		//check forward of position
 		if(direction == RIGHT)
 		{
-			if(*(ptr+1) == '.')
+			if(*(ptr+1) != '#')
 			{
-				*ptr = 'X';
+				//*ptr = 'X';
 				ptr = ptr + 1;
-				x = x + 1;
-				new = x;
+				*ptr = 'X';
+				moved = 1;
+				//x = x + 1;
+				//new = x;
 			}
 			else
-				direction++;
+				direction = UP;
 		}
 		else if(direction == UP)
 		{
-			if(*(ptr-SIZE) == '.')
+			if(*(ptr-SIZE) != '#')
 			{
-				*ptr = 'X';
+				//*ptr = 'X';
 				ptr = ptr - SIZE;
-				y = y - 1;
-				new = y;
+				*ptr = 'X';
+				moved = 1;
+				//y = y - 1;
+				//new = y;
 			}
 			else
-				direction++;
+				direction = LEFT;
 		}
 		else if(direction == LEFT)
 		{
-			if(*(ptr-1) == '.')
+
+			if(*(ptr-1) != '#')
 			{
-				*ptr = 'X';
+				//*ptr = 'X';
 				ptr = ptr - 1;
-				x = x - 1;
-				new = x;
+				*ptr = 'X';
+				moved  = 1;
+				//x = x - 1;
+				//new = x;
 			}
 			else
-				direction++;
+				direction = DOWN;
 		}
 		else if(direction == DOWN)
 		{
-			if(*(ptr+SIZE) == '.')
+			if(*(ptr+SIZE) != '#')
 			{
-				*ptr = 'X';
+				//*ptr = 'X';
 				ptr = ptr + SIZE;
-				y = y + 1;
-				new = y;
+				*ptr = 'X';
+				moved = 1;
+				//y = y + 1;
+				//new = y;
 			}
 			else
-				direction++;
+				direction = RIGHT;
 		}
 	}
 	
@@ -146,16 +159,19 @@ int mazeTraverse(int maze[][SIZE], int x, int y)
 #endif
 
 
-	printf("here %c\n", maze[x][y]);
-	printf("*ptr %c\n", *ptr);
-	printf("*hand %c\n", *hand);
-	return new;
+	//printf("here %c\n", maze[x][y]);
+	//printf("*ptr %c\n", *ptr);
+	//printf("*hand %c\n", *hand);
+	return ptr;
 }
 
 int main(int argc, char* argv[])
 {
-	int x = 10;
-	int y  =9;
+	int x = 6;
+	int y  = 6;
+	int keepGoing = 1;
+	int i = 0;
+	int j = 0;
 	int maze[12][12] = {
 		{'#','#','#','#','#','#','#','#','#','#','#','#'},
 		{'#','.','.','.','#','.','.','.','.','.','.','#'},
@@ -170,15 +186,27 @@ int main(int argc, char* argv[])
 		{'#','.','.','.','.','.','.','#','.','.','.','#'},
 		{'#','#','#','#','#','#','#','#','#','#','#','#'},
 	};
-	int *current = maze[x][y];
+	int *current = &maze[x][y];
 	
-	while(1)
+	while(keepGoing == 1)
 	{
+		current = mazeTraverse(maze, current);
+		for( i = 0; i < SIZE; i++)
+		{
+			if(current == &maze[i][0] || current == &maze[i][SIZE-1])
+				keepGoing = 0;
+		}
+		for( j = 0; j < SIZE; j++)
+		{
+			if(current == &maze[0][j] || current == &maze[SIZE-1][j])
+				keepGoing = 0;
+		}
 		printMaze(maze);
-		*current = mazeTraverse(maze, x, y);
 		sleep(1);
 		system("clear");
+
 	}
+	printf("done!\n");
 
 	return 0;
 }
