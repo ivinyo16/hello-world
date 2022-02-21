@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <unistd.h>
+#include <limits.h>
 
 /**
 * Write a function that will manage a list of timers and call an associated
@@ -39,7 +40,7 @@ timer_s timers_example[] = {
    {
        .time_remaining = 0U,      // Timer starts at 0, so callback is triggered
        // When time_remaining goes to 0, this reload value is stored back to time_remaining
-       .timer_reload_value = 1U, 
+       .timer_reload_value = 5U, 
        .callback = timer_0_callback,  // Called when time_remaining reaches 0
    },
    {
@@ -57,11 +58,19 @@ void timer_periodic_task(timer_s* timers, size_t timers_array_size)
     if( timers == NULL )
     {
         fprintf(stderr, "memory not allocated\n");
+        return;
     }
 
     for( index = 0 ; index < timers_array_size; index++)
     {
-        if((&timers[index])->time_remaining == 0 || --(&timers[index])->time_remaining == 0)
+        if( ((&timers[index])->time_remaining) > INT_MAX )
+        {
+            (&timers[index])->time_remaining = (&timers[index])->timer_reload_value;
+            printf("handle invalid timer value\n");
+            continue;
+        }
+
+        if( (&timers[index])->time_remaining == 0 || --(&timers[index])->time_remaining == 0)
         {
             (&timers[index])->callback();
             (&timers[index])->time_remaining = (&timers[index])->timer_reload_value;
