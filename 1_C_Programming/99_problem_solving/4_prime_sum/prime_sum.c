@@ -4,7 +4,7 @@
 
 int main()
 {
-    int i, a = 10, count, sum = 0;
+    int i, a = 1, count, sum = 0;
 
 
     while(a <= 1000)
