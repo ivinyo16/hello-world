@@ -1,0 +1,3 @@
+[submodule "1_C_Programming/99_problem_solving/12_find_two_indices_of_sum/uthash"]
+	path = 1_C_Programming/99_problem_solving/12_find_two_indices_of_sum/uthash
+	url = https://github.com/troydhanson/uthash
