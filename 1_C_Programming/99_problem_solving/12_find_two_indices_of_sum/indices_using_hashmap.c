@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define MAX_NUM 5
+#define MAX_NUM 8
 
 
 /**
@@ -27,6 +27,7 @@ int* twoSum(int* nums, int numsSize, int target, int* returnSize)
                 *returnSize = 2;
                 values_to_return[0] = i;
                 values_to_return[1] = j;
+                free(hash_map);
                 return values_to_return;
             }
         }
@@ -35,18 +36,22 @@ int* twoSum(int* nums, int numsSize, int target, int* returnSize)
         {
             hash_map = (int*) malloc (hash_map_size * sizeof(int));
         }
+        else
+        {
+            hash_map = (int*) realloc (hash_map, hash_map_size * sizeof(int));
+        }
         hash_map[j] = nums[i];
         printf("[j]: %d\n", j);
         printf("hash_map[j]: %d\n", hash_map[j]);
-        hash_map = (int*) realloc (hash_map, hash_map_size * sizeof(int));
     }
+    free(hash_map);
     return values_to_return;
 }
 
 int main(int argc, char* argv[])
 {
     int numsSize = MAX_NUM;
-    int nums[MAX_NUM] = {2, 0, 3, 5, 6};
+    int nums[MAX_NUM] = {3,2,4,1,9,6,3,8};
     int target = 9;
     int returnSize;
     int *yes;
@@ -56,7 +61,6 @@ int main(int argc, char* argv[])
         printf("nothing found\n");
         return -1;
     }
-    printf("yes %p\n", &yes[0]);
     printf("main yes[0] %d\n", yes[0]);
     printf("main yes[1] %d\n", yes[1]);
     free(yes);
