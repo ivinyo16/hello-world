@@ -75,9 +75,18 @@ int lengthOfLongestSubstring(char *s)
 
                 int streak;
                 if (repeat < 0) /* no repeated chars yet */
+                {
                         streak = i + 1;
+                        printf("no repeated chars yet\n");
+                }
+                        
                 else
+                {       
+                        printf("streak = i - repeat; streak = %d - %d\n", i, repeat);
                         streak = i - repeat;
+                }
+
+                printf("streak: %d\n", streak);
 
                 if (streak > longest)
                         longest = streak;
@@ -92,7 +101,7 @@ int main()
 {
 
     // char sample[] = "anviaj";
-    char sample[] = "abcabcbb";
+    char sample[] = "abcabcbefg";
     int answer = 0;
     answer = lengthOfLongestSubstring(sample);
 
