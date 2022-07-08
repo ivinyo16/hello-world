@@ -40,8 +40,8 @@ int cutRod(int price_array[], int total_length)
 
 int main(int argc, char* argv[])
 {
-    int price_table_vs_inch[] = { 1, 5, 8, 9, 10, 17, 17, 20, 24, 30};
-    // int price_table_vs_inch[] = { 1, 5, 8, 9, 10, 17, 17, 20, 24, 30, 32, 35, 38, 39, 40, 47, 47, 50, 54, 60, 32, 35, 38, 39, 40, 47, 47, 50, 54, 60 };
+    // int price_table_vs_inch[] = { 1, 5, 8, 9, 10, 17, 17, 20, 24, 30};
+    int price_table_vs_inch[] = { 1, 5, 8, 9, 10, 17, 17, 20, 24, 30, 32, 35, 38, 39, 40, 47, 47, 50, 54, 60, 32, 35, 38, 39, 40, 47, 47, 50, 54, 60 };
     int size = sizeof(price_table_vs_inch)/sizeof(int);
 
     int idx = 0;
