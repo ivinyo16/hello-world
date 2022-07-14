@@ -2,6 +2,7 @@
     "files.associations": {
         "functional": "c",
         "random": "c",
-        "limits": "c"
+        "limits": "c",
+        "array": "c"
     }
 }
