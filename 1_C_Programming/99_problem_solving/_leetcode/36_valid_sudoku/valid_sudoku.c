@@ -37,16 +37,6 @@ bool isValidSudoku(char** board, int boardSize, int* boardColSize)
     memset(hm_of_columns, '0', sizeof(hm_of_columns[0][0]) * 9 * 9); 
     memset(hm_of_squares, '0', sizeof(hm_of_squares[0][0]) * 9 * 9); 
 
-    // for( i = 0; i < 9 ; i++)
-    // {
-    //     memset(hm_of_rows[i], '0', 9);
-    //     memset(hm_of_columns[i], '0', 9);
-        
-    //     memset(hm_of_squares[i], '0', 9);
-    // }
-
-    // printf("sss %d\n", hm_of_rows[1][2]);
-
     for( i = 0; i < 9 ; i++)
     {
        for( j = 0; j < 9 ; j++)
