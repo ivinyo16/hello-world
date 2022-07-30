@@ -21,7 +21,7 @@
 #include <stdbool.h>
 #include <limits.h>
 
-// #define DEBUG
+#define DEBUG
 #ifdef DEBUG
 #define DEBUG_PRINT(...) do{ fprintf( stderr, __VA_ARGS__ ); } while( false )
 #else
@@ -104,87 +104,23 @@ struct ListNode* copyList(struct ListNode *src)
 
 struct ListNode* reverseList(struct ListNode* head)
 {
-    struct ListNode* answer = NULL;
-    struct ListNode* answer_head = NULL;
-    struct ListNode* current = head;
-    struct ListNode* copy_head = current;
-
-    //1. zero or one 
-    if(current == NULL)
-    {
-        return NULL;
-    }
-    if(current->next == NULL)
+    if(head==NULL || head->next==NULL)
     {
         return head;
     }
-
-    while(current != NULL)
+    struct ListNode* headnew=(struct ListNode*)malloc(sizeof(struct ListNode));
+    headnew->val=head->val;
+    headnew->next=NULL;
+    head=head->next;
+    while(head!=NULL)
     {
-        if(current->next == NULL)
-        {
-            if(answer == NULL)
-            {
-                answer = (struct ListNode*)malloc(sizeof(struct ListNode));
-                answer_head = answer;
-                answer->val = current->val;
-                answer->next = NULL;
-            }
-            else
-            {
-                DEBUG_PRINT("WHAT LIES %p %d\n", answer, answer->val);
-                while(answer->next != NULL)
-                {
-                    answer = answer->next;
-                }
-                DEBUG_PRINT("WHAT LIES NEXT %p %d\n", answer, answer->val);
-                answer->next = (struct ListNode*)malloc(sizeof(struct ListNode));
-                answer->next->val = current->val;
-                answer->next->next = NULL;
-                DEBUG_PRINT("WHAT LIES LAST %p %d\n", answer->next, answer->next->val);
-            }
-            //cut tail
-            current = NULL;
-            // DEBUG_PRINT("val %d\n", answer->val);
-            continue;
-        }
-        else if(current->next->next == NULL)
-        {
-            if(answer == NULL)
-            {
-                answer = (struct ListNode*)malloc(sizeof(struct ListNode));
-                answer_head = answer;
-                answer->val = current->next->val;
-                answer->next = NULL;
-            }
-            else
-            {
-                while(answer->next != NULL)
-                {
-                    DEBUG_PRINT("traverse\n");
-                    answer = answer->next;
-                }
-                DEBUG_PRINT("pop\n");
-                answer->next = (struct ListNode*)malloc(sizeof(struct ListNode));
-                answer->next->val = current->next->val;
-                DEBUG_PRINT("%p 1UNWANTED %d\n", answer, answer->val );
-                DEBUG_PRINT("%p UNWANTED %d\n", answer->next, answer->next->val );
-                answer->next->next = NULL;
-            }
-            //cut tail
-            current->next = NULL;
-            DEBUG_PRINT("%p val %d\n", answer, answer->val);
-            current = copy_head;
-            continue;
-        }
-        
-        current = current->next;
+        struct ListNode* tmp=headnew;
+        headnew=head;            
+        head=head->next;
+        headnew->next=tmp;
     }
-
-
-    return answer_head;
+    return headnew;
 }
-
 int main(int argc, char* argv[])
 {
     struct ListNode *list1 = NULL;
