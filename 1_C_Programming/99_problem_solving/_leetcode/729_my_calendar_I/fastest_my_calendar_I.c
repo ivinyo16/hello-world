@@ -36,107 +36,77 @@
 #define DEBUG_PRINT(...) do{ } while ( false )
 #endif
 
-typedef struct node_t
-{
-    int left_key;
-    int weak_right_key;
-    struct node_t *left;
-    struct node_t *right;
-}node_t;
+struct node{
+    int start;
+    int end;
+  struct node *next;  
+};
 
-typedef struct MyCalendar
-{
-    node_t *node;
-}MyCalendar;
+typedef struct {
+    struct node *head;
+} MyCalendar;
 
 
-
-MyCalendar* myCalendarCreate() 
-{
-    MyCalendar *head = (MyCalendar *) malloc( sizeof(MyCalendar));
-    head->node  = NULL;
-    return head;
+MyCalendar* myCalendarCreate() {
+    MyCalendar *p;
+    p = malloc(sizeof(MyCalendar));
+    p->head = NULL;
+    return p;
 }
 
-
-bool myCalendarBook(MyCalendar* obj, int start, int end) 
-{
-    node_t *cur_node = obj->node;
-
-    if(cur_node == NULL)
-    {
-        DEBUG_PRINT("null\n");
-        cur_node = (node_t *)malloc(sizeof(node_t));
-        cur_node->left_key = start;
-        cur_node->weak_right_key = end;
-        cur_node->left = cur_node->right = NULL;
-        obj->node = cur_node;
-        return true;
+bool myCalendarBook(MyCalendar* obj, int start, int end) {
+  struct node *p = obj->head;
+    bool res = true;
+    bool made = false;
+    struct node *prev = obj->head;
+    while(p){
+        if(p->start < end && p->end > start){
+            res = false;
+            break;
+        }
+        if(p->start >= end){
+            struct node *t;
+            t = malloc(sizeof(struct node));
+            t->start = start;
+            t->end = end;
+            made = true;
+            if(prev == p){ //the first
+                t->next = p;
+                obj->head = t;
+            } else{ // seconde
+                prev->next = t;
+                t->next = p;
+            }
+            break;
+        }
+        prev = p;
+        p = p->next;
     }
-
-    while(cur_node != NULL)
-    {
-        if(  (start < cur_node->left_key && end <= cur_node->left_key) )
-        {
-            if(cur_node->left == NULL )
-            {
-                cur_node->left = (node_t *)malloc(sizeof(node_t));
-                cur_node->left->left_key = start;
-                cur_node->left->weak_right_key = end;
-                cur_node->left->left = cur_node->left->right = NULL;
-                return true;
-            }
-            else
-            {
-                cur_node = cur_node->left;
-            }
-        }
-        else if(  (start >= cur_node->weak_right_key && end > cur_node->weak_right_key) )
-        {
-            if(cur_node->right == NULL)
-            {
-                cur_node->right = (node_t *)malloc(sizeof(node_t));
-                cur_node->right->left_key = start;
-                cur_node->right->weak_right_key = end;
-                cur_node->right->left = cur_node->right->right = NULL;
-                return true;
-            }
-            else
-            {
-                cur_node = cur_node->right;
-            }
-        }
+    if(res == true && made == false){ // the last
+        struct node *t;
+        t = malloc(sizeof(struct node));
+        t->start = start;
+        t->end = end;
+        t->next = NULL;
+        if(prev)
+            prev->next = t;
         else
-        {
-            DEBUG_PRINT("start: %d, end: %d, left: %d, right: %d\n", start,end, cur_node->left_key, cur_node->weak_right_key);
-            return false;
-        }
-
+            obj->head = t;
     }
-
-    return false;
+    return res;
 }
 
-void freeTreeWalk(node_t *head)
-{
-    if(head != NULL)
-    {
-        freeTreeWalk(head->left);
-        freeTreeWalk(head->right);
-        free(head);
-    }
-    
-}
+void myCalendarFree(MyCalendar* obj) {
+    struct node *p;
+    struct node *t;
+    p = obj->head;
 
-void myCalendarFree(MyCalendar* obj) 
-{
-    if(obj)
-    {
-        node_t *node = obj->node;
-        // node_t *node = *nodes;
-        freeTreeWalk(node);
-        free(obj);
+    while(p){
+        t = p->next;
+        free(p);
+        p = t;
     }
+    return;
 }
 
 /**
