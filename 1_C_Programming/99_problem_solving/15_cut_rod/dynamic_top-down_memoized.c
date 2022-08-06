@@ -2,6 +2,10 @@
  * @file template.c
  * @author your name (you@domain.com)
  * @brief 
+ * 
+ * techniques used:
+ * - dynamic programming 
+ * 
  * @version 0.1
  * @date 2022-06-22
  * 
