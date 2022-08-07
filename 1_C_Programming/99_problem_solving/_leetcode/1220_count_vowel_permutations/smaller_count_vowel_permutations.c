@@ -69,41 +69,44 @@
 
 int countVowelPermutation(int n)
 {   
-    DEBUG_PRINT("%d\n", MOD);
-    /**
-     * @brief dp[number of vowels][nth size string +1 index offset]
-     * each row represents number of times vowel 'row' has spawned at nth round
-     *
-     */
-    long int dp[5][n+1];
-    memset( dp, 0, sizeof(dp) );
 
-    dp[0][1] = dp[1][1] = dp[2][1] = dp[3][1] =dp[4][1] = 1; 
+    long int a = 1, e = 1, i = 1, o = 1, u = 1;
+    long int a_new, e_new, i_new, o_new, u_new;
 
-
-    for(int i = 2; i < n+1 ; i++ )
+    for(int j = 1; j < n ; j++ )
     {
         //ex. number of a's found due to the number of e's,i's, and u's from previous iteration
-        dp[0][i] = (dp[1][i-1] + dp[2][i-1] + dp[4][i-1]) % MOD;
-        dp[1][i] = (dp[0][i-1] + dp[2][i-1] ) % MOD;
-        dp[2][i] = (dp[1][i-1] + dp[3][i-1] ) % MOD;
-        dp[3][i] = (dp[2][i-1] ) % MOD;
-        dp[4][i] = (dp[2][i-1] + dp[3][i-1]) % MOD;
+        DEBUG_PRINT("a %d\n", a);
+        DEBUG_PRINT("e %d\n", e);
+        DEBUG_PRINT("i %d\n", i);
+        DEBUG_PRINT("o %d\n", o);
+        DEBUG_PRINT("u %d\n\n", u);
+        a_new = (e + i + u) % MOD;
+        e_new = (a + i ) % MOD;
+        i_new = (e + o ) % MOD;
+        o_new = (i ) % MOD;
+        u_new = (i + o) % MOD;
+        a = a_new;
+        e = e_new;
+        i = i_new;
+        o = o_new;
+        u = u_new;
+        DEBUG_PRINT("a %d\n", a);
+        DEBUG_PRINT("e %d\n", e);
+        DEBUG_PRINT("i %d\n", i);
+        DEBUG_PRINT("o %d\n", o);
+        DEBUG_PRINT("u %d\n", u);
+
     }
 
-    int ans = 0;
-
-    for(int i = 0 ; i < 5 ; i++ )
-    {
-        ans = (ans+ dp[i][n]) % MOD;
-    }
+    int ans = (a + e + i + o + u) % MOD;
 
     return ans;
 }
 
 int main(int argc, char* argv[])
 {
-    int n = 40;
+    int n = 50;
     printf("number of valid %d-character strings: %d\n", n, countVowelPermutation(n));
 
     return 0;
