@@ -2,7 +2,7 @@
  * @file binary_search_tree.c
  * @author your name (you@domain.com)
  * @brief 
- * @version 0.1
+ * @version 0.2
  * @date 2022-08-03
  * 
  * @copyright Copyright (c) 2022
@@ -57,6 +57,42 @@ void freeTreeWalk(tree_t *head)
     }
 }
 
+/**
+ * @brief returns pointer to node containing given key, else return NULL
+ * 
+ * @param tree root tree
+ * @param key 
+ * @return tree_t* 
+ */
+tree_t * findNode(tree_t *tree, int key)
+{
+    if(tree == NULL)
+    {
+        return NULL;
+    }
+
+    tree_t *current = tree;
+
+    while(current != NULL)
+    {
+        if(current->key == key)
+        {
+            return current;
+        }
+        else if(current->key < key)
+        {
+            current = current->right;
+        }
+        else if(current->key > key)
+        {
+            current = current->left;
+        }
+    }
+
+    return NULL;
+    
+}
+
 tree_t * insertNode(tree_t *tree, int key)
 {
     if(tree == NULL)
@@ -87,13 +123,22 @@ tree_t *initialize(tree_t *head, int capacity)
 int main(int argc, char* argv[])
 {
     tree_t *my_tree = NULL;
+    tree_t *search_tree = NULL;
     my_tree = insertNode(my_tree, 4);
     insertNode(my_tree, 3);
     insertNode(my_tree, 5);
 
     inorderTreeWalk(my_tree);
 
+
+    search_tree = findNode(my_tree, 6);
+    if(search_tree)
+    {
+        printf("found\n");
+    }
+
     freeTreeWalk(my_tree);
+
 
     return 0;
 }

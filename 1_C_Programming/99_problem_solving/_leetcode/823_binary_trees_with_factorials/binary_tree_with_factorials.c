@@ -250,7 +250,7 @@ int numFactoredBinaryTrees(int* arr, int arrSize)
     {
         for(int j = 0 ; j < i ; j++ )
         {
-            //4. We entertain only if it's a factor
+            //4. We entertain only if it's a factor and it's pair exists in the element
             if( (arr[i] % arr[j]) == 0 )
             {
                 if( searchTable(hash_table_1, arr[i]/arr[j]) )
