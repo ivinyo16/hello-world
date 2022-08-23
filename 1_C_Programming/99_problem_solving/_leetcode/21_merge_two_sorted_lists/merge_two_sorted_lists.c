@@ -7,6 +7,9 @@
  * Merge the two lists in a one sorted list. The list should be made by splicing together the nodes of the first two lists.
  * Return the head of the merged linked list.
  * 
+ * Techniques used:
+ * - Linked List
+ * 
  * @version 0.1
  * @date 2022-07-28
  * 
