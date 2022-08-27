@@ -94,77 +94,23 @@ void printList(struct ListNode *head)
     printf("\n");
 }
 
+struct ListNode* temp = NULL;
+
+bool check(struct ListNode* head)
+{
+    if(head == NULL)
+    {
+        return true;
+    }
+    bool answer = check(head->next) & (temp->val == head->val);
+    temp = temp->next;
+    return answer;
+}
+
 bool isPalindrome(struct ListNode* head)
 {
-    
-    int count = 1;
-
-    //0. if by itself, it is a palindrome
-    if(head->next == NULL)
-    {
-        return true;
-    }
-
-    //1. traverse and count number of nodes
-    struct ListNode * current = head;
-    while(current->next != NULL)
-    {
-        count++;
-        current = current->next;
-    }
-    DEBUG_PRINT("count %d\n", count);
-
-    //2. check first outer edges, since we already have tail, might as well
-    if(head->val != current->val)
-    {
-        return false;
-    }
-    count=count - 2;
-    if(count <= 1)
-    {
-        return true;
-    }
-    DEBUG_PRINT("count %d array size %d \n", count, count/2);
-
-    struct ListNode *map[count/2];
-    int half;
-    current = head->next;
-
-    if(count%2 == 0)
-    {
-        half = count/2;
-    }
-    else
-    {
-        half = (count/2) +1;
-    }
-
-    int idx = 0;
-    for(int i = 0 ; i < count ; i++)
-    {
-        DEBUG_PRINT("%d %d\n", i, current->val);
-        // DEBUG_PRINT("val %d \n", current->val);
-        if(i >= half)
-        {
-            map[idx++] = current;
-            // DEBUG_PRINT("map %d \n", map[0]->val);
-        }
-        current = current->next;
-    }
-
-    //3. time to check
-    current = head->next;
-    for( int i = idx-1 ; i >= 0 ; i-- )
-    {
-        // DEBUG_PRINT("map[%d] %d \n", i, map[i]->val);
-        if(current->val != map[i]->val)
-        {
-            return false;
-        }
-        current = current->next;
-    }
-
-    return true;
+    temp = head;
+    return check(head);
 }
 
 
@@ -175,13 +121,13 @@ int main(int argc, char* argv[])
     bool answer = false;
 
     insertList(&list1, 1);
-    insertList(&list1, 0);
+    // insertList(&list1, 0);
     insertList(&list1, 1);
-    // insertList(&list1, 2);
-    // insertList(&list1, 3);
-    // insertList(&list1, 2);
-    // insertList(&list1, 1);
-    // insertList(&list1, 5);
+    insertList(&list1, 2);
+    insertList(&list1, 3);
+    insertList(&list1, 2);
+    insertList(&list1, 1);
+    insertList(&list1, 1);
 
 
     printList(list1);
