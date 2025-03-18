@@ -86,7 +86,7 @@ int getSumOfMultiples(int first_number, int second_number, int limit)
 
 int main(int argc, char* argv[])
 {
-    int limit = 1000000;
+    int limit = 1000;
     int first_number = 3;
     int second_number = 5;
     int answer = 0;

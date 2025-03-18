@@ -23,21 +23,8 @@
 #define DEBUG_PRINT(...) do{ } while ( false )
 #endif
 
-
-//By considering the terms in the Fibonacci sequence whose values do not exceed four million, find the sum of the even-valued terms.
-int findSum()
-{
-    int num = 1;
-    int sum = 0
-
-    // while ()
-
-}
-
 int main(int argc, char* argv[])
 {
-
-    findSum()
 
 
     return 0;
