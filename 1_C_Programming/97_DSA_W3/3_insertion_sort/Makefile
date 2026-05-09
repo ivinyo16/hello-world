@@ -1,8 +1,8 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -pedantic -std=c11
-SRC = src/code.c
+SRC = insertion_sort.c
 OBJ = $(SRC:.c=.o)
-TARGET = a
+TARGET = my_app
 
 ifeq ($(OS),Windows_NT)
     RM = del /f /q

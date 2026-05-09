@@ -18,6 +18,7 @@
 #include <limits.h>
 #include <time.h>
 
+#define UNUSED(x) (void)(x)
 
 #define DEBUG
 #ifdef DEBUG
@@ -91,8 +92,10 @@ void createAscendingArray(int8_t *array, int size)
     }
 }
 
-int main(int8_t argc, char* argv[])
+int main(int argc, char* argv[])
 {
+    UNUSED(argc);
+    UNUSED(argv);
     #define MAX_SIZE 50000
     int8_t input_array[MAX_SIZE] = {0};
     int8_t result_array[MAX_SIZE] = {0};
