@@ -1,2 +1,5 @@
-add_executable(template code.c)
+add_executable(template 
+    main.c
+    utils_array.c
+)
 
